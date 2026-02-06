@@ -147,7 +147,7 @@ func ApplyObfuscation(headers map[string]string, config ObfuscationConfig) map[s
 func AddRandomPadding(data []byte, minPadding, maxPadding int) []byte {
 	paddingSize := minPadding
 	if maxPadding > minPadding {
-		paddingSize += int(rand.Int31n(int32(maxPadding - minPadding)))
+		paddingSize += int(rand.Int32N(int32(maxPadding - minPadding)))
 	}
 	
 	padding := make([]byte, paddingSize)
