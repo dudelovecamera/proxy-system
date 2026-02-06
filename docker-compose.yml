@@ -1,0 +1,119 @@
+version: '3.8'
+
+services:
+  # Upstream Servers (Entry Points)
+  upstream1:
+    build: ./upstream-server
+    container_name: upstream1
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./config/upstream.yaml:/app/config/upstream.yaml
+    networks:
+      - proxy-network
+    environment:
+      - CONFIG_PATH=/app/config/upstream.yaml
+
+  upstream2:
+    build: ./upstream-server
+    container_name: upstream2
+    ports:
+      - "8002:8001"
+    volumes:
+      - ./config/upstream.yaml:/app/config/upstream.yaml
+    networks:
+      - proxy-network
+
+  upstream3:
+    build: ./upstream-server
+    container_name: upstream3
+    ports:
+      - "8003:8001"
+    volumes:
+      - ./config/upstream.yaml:/app/config/upstream.yaml
+    networks:
+      - proxy-network
+
+  # Central Proxy Server
+  central-proxy:
+    build: ./central-proxy
+    container_name: central-proxy
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config/central.yaml:/app/config/central.yaml
+    networks:
+      - proxy-network
+    depends_on:
+      - downstream1
+      - downstream2
+      - downstream3
+
+  # Downstream Servers (Exit Points)
+  downstream1:
+    build: ./downstream-server
+    container_name: downstream1
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./config/downstream.yaml:/app/config/downstream.yaml
+    networks:
+      - proxy-network
+
+  downstream2:
+    build: ./downstream-server
+    container_name: downstream2
+    ports:
+      - "8444:8443"
+    volumes:
+      - ./config/downstream.yaml:/app/config/downstream.yaml
+    networks:
+      - proxy-network
+
+  downstream3:
+    build: ./downstream-server
+    container_name: downstream3
+    ports:
+      - "8445:8443"
+    volumes:
+      - ./config/downstream.yaml:/app/config/downstream.yaml
+    networks:
+      - proxy-network
+
+  # Relay Nodes (Gateway Isolation)
+  relay1:
+    build: ./relay-node
+    container_name: relay1
+    ports:
+      - "8500:8500"
+    volumes:
+      - ./config/relay.yaml:/app/config/relay.yaml
+    networks:
+      - proxy-network
+
+  relay2:
+    build: ./relay-node
+    container_name: relay2
+    ports:
+      - "8501:8500"
+    volumes:
+      - ./config/relay.yaml:/app/config/relay.yaml
+    networks:
+      - proxy-network
+
+  # Starlink Gateway
+  gateway:
+    build: ./starlink-gateway
+    container_name: starlink-gateway
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./config/gateway.yaml:/app/config/gateway.yaml
+    networks:
+      - proxy-network
+    # Uncomment for host network mode to access actual internet
+    # network_mode: host
+
+networks:
+  proxy-network:
+    driver: bridge

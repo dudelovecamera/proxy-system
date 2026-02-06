@@ -1,0 +1,23 @@
+# Relay Node Configuration
+listen_port: 8500
+node_id: "relay1.internal"
+
+# Previous hops (nodes that send traffic to this relay)
+prev_hops:
+  - "upstream1:8001"
+  - "upstream2:8002"
+  - "downstream1:8443"
+
+# Next hops (where to forward traffic)
+# If this is the final relay before gateway, leave empty and set gateway_url
+next_hops:
+  - "relay2.internal:8501"
+
+# Gateway configuration (only for final relay)
+gateway_url: ""  # Set to "http://gateway:9000" if this is final relay
+auth_token: ""   # Will be obtained from gateway on registration
+secret: "relay-shared-secret-key"
+
+# Traffic mixing settings
+traffic_mixing: true
+rotation_time: 300  # seconds between route rotations

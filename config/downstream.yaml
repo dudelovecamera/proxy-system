@@ -1,0 +1,15 @@
+# Downstream Server Configuration
+listen_port: 8443
+
+obfuscation:
+  type: "http_mimic"
+  headers:
+    User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    Accept-Language: "en-US,en;q=0.9"
+  padding: true
+
+encryption:
+  enabled: true
+  algorithm: "aes-256-gcm"
+
+reassembly_timeout: 60000  # milliseconds

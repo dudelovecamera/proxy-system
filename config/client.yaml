@@ -1,0 +1,20 @@
+# Client Configuration
+chunk_size: 8192  # bytes per chunk
+
+# List of upstream servers to distribute chunks
+upstream_servers:
+  - "localhost:8001"
+  - "localhost:8002"
+  - "localhost:8003"
+
+# Port to listen for response chunks from downstream servers
+downstream_port: 7000
+
+# Request timeout in milliseconds
+timeout: 30000
+
+# Encryption settings (must match server configuration)
+encryption:
+  enabled: true
+  algorithm: "aes-256-gcm"
+  mode: "body_only"  # or "full_request"

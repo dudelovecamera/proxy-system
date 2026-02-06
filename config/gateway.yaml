@@ -1,0 +1,17 @@
+# Starlink Gateway Configuration
+listen_port: 9000
+
+authenticated_nodes:
+  - "relay1.internal"
+  - "relay2.internal"
+  - "relay3.internal"
+
+anonymization:
+  traffic_mixing: true
+  source_rotation: true
+  mac_randomization: false  # Requires root/admin privileges
+  timing_jitter: 500  # milliseconds
+
+isolation:
+  hide_gateway_ip: true
+  use_relay_nodes: true
