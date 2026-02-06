@@ -1,4 +1,4 @@
-module github.com/yourusername/proxy-system
+module github.com/dudelovecamera/proxy-system
 
 go 1.21
 
