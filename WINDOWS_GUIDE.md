@@ -42,7 +42,7 @@ cd distributed-proxy-system
 
 ```cmd
 # Initialize Go module
-go mod init github.com/yourusername/proxy-system
+go mod init github.com/dudelovecamera/proxy-system
 
 # Install dependencies
 go get gopkg.in/yaml.v3
@@ -150,7 +150,7 @@ package main
 
 import (
     "log"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -246,7 +246,7 @@ import (
     "io/ioutil"
     "log"
     "net/http"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {

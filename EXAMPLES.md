@@ -7,7 +7,7 @@ package main
 
 import (
     "log"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -38,7 +38,7 @@ package main
 import (
     "encoding/json"
     "log"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -82,7 +82,7 @@ package main
 import (
     "log"
     "regexp"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -125,7 +125,7 @@ import (
     "encoding/json"
     "fmt"
     "log"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 type APIClient struct {
@@ -218,7 +218,7 @@ package main
 import (
     "io/ioutil"
     "log"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -255,7 +255,7 @@ package main
 import (
     "log"
     "sync"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func main() {
@@ -303,7 +303,7 @@ import (
     "net/http"
     "net/http/httputil"
     "net/url"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 // Create local HTTP proxy that browsers can use
@@ -371,7 +371,7 @@ package main
 import (
     "log"
     "time"
-    "github.com/yourusername/proxy-system/client"
+    "github.com/dudelovecamera/proxy-system/client"
 )
 
 func makeRequestWithRetry(proxyClient *client.ProxyClient, url string, maxRetries int) ([]byte, error) {

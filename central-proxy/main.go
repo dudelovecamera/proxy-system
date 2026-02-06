@@ -12,19 +12,19 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yourusername/proxy-system/common"
+	"github.com/dudelovecamera/proxy-system/common"
 	"gopkg.in/yaml.v3"
 )
 
 // CentralConfig configuration for central proxy
 type CentralConfig struct {
-	ListenPort          int                     `yaml:"listen_port"`
-	DownstreamServers   []string                `yaml:"downstream_servers"`
-	ReassemblyTimeout   int                     `yaml:"reassembly_timeout"` // milliseconds
-	ProxyMode           string                  `yaml:"proxy_mode"`         // "http" or "socks5"
-	Encryption          common.EncryptionConfig `yaml:"encryption"`
-	EncryptionKey       []byte                  `yaml:"-"`
-	ChunkSize           int                     `yaml:"chunk_size"` // for response fragmentation
+	ListenPort        int                     `yaml:"listen_port"`
+	DownstreamServers []string                `yaml:"downstream_servers"`
+	ReassemblyTimeout int                     `yaml:"reassembly_timeout"` // milliseconds
+	ProxyMode         string                  `yaml:"proxy_mode"`         // "http" or "socks5"
+	Encryption        common.EncryptionConfig `yaml:"encryption"`
+	EncryptionKey     []byte                  `yaml:"-"`
+	ChunkSize         int                     `yaml:"chunk_size"` // for response fragmentation
 }
 
 // CentralProxy aggregates chunks and performs actual proxying
@@ -101,7 +101,7 @@ func (p *CentralProxy) handleChunk(w http.ResponseWriter, r *http.Request) {
 		chunk.Data = decrypted
 	}
 
-	log.Printf("Central received chunk %d/%d for session %s", 
+	log.Printf("Central received chunk %d/%d for session %s",
 		chunk.SequenceNum, chunk.TotalChunks, chunk.SessionID)
 
 	// Add to session
@@ -195,7 +195,7 @@ func (p *CentralProxy) performProxyRequest(session *common.Session, body []byte)
 func (p *CentralProxy) fragmentAndForward(session *common.Session, response []byte) error {
 	// Calculate number of chunks
 	totalChunks := (len(response) + p.config.ChunkSize - 1) / p.config.ChunkSize
-	
+
 	log.Printf("Fragmenting response into %d chunks", totalChunks)
 
 	for i := 0; i < totalChunks; i++ {
@@ -225,7 +225,7 @@ func (p *CentralProxy) fragmentAndForward(session *common.Session, response []by
 
 		// Select downstream server (round-robin)
 		downstreamURL := p.config.DownstreamServers[i%len(p.config.DownstreamServers)]
-		
+
 		if err := p.sendToDownstream(chunk, downstreamURL); err != nil {
 			log.Printf("Failed to send chunk %d to %s: %v", i+1, downstreamURL, err)
 		}
@@ -290,10 +290,10 @@ func (p *CentralProxy) healthCheck(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":        "healthy",
-		"role":          "central-proxy",
+		"status":          "healthy",
+		"role":            "central-proxy",
 		"active_sessions": sessionCount,
-		"time":          time.Now().Format(time.RFC3339),
+		"time":            time.Now().Format(time.RFC3339),
 	})
 }
 
@@ -305,13 +305,13 @@ func (p *CentralProxy) Start() error {
 	addr := fmt.Sprintf(":%d", p.config.ListenPort)
 	log.Printf("Central proxy starting on %s", addr)
 	log.Printf("Downstream servers: %v", p.config.DownstreamServers)
-	
+
 	return http.ListenAndServe(addr, nil)
 }
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	
+
 	configPath := "config/central.yaml"
 	if len(os.Args) > 1 {
 		configPath = os.Args[1]

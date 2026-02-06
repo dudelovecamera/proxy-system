@@ -126,7 +126,7 @@ Double-click `proxy-gui.exe`:
 ### In Your Code
 
 ```go
-import "github.com/yourusername/proxy-system/client"
+import "github.com/dudelovecamera/proxy-system/client"
 
 proxyClient, _ := client.NewProxyClient("config/client.yaml")
 go proxyClient.Start()

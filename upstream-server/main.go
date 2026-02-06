@@ -11,17 +11,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yourusername/proxy-system/common"
+	"github.com/dudelovecamera/proxy-system/common"
 	"gopkg.in/yaml.v3"
 )
 
 // UpstreamConfig configuration for upstream server
 type UpstreamConfig struct {
-	ListenPort   int                      `yaml:"listen_port"`
-	CentralProxy string                   `yaml:"central_proxy"`
-	Obfuscation  common.ObfuscationConfig `yaml:"obfuscation"`
-	Encryption   common.EncryptionConfig  `yaml:"encryption"`
-	EncryptionKey []byte                  `yaml:"-"` // 32 bytes for AES-256
+	ListenPort    int                      `yaml:"listen_port"`
+	CentralProxy  string                   `yaml:"central_proxy"`
+	Obfuscation   common.ObfuscationConfig `yaml:"obfuscation"`
+	Encryption    common.EncryptionConfig  `yaml:"encryption"`
+	EncryptionKey []byte                   `yaml:"-"` // 32 bytes for AES-256
 }
 
 // UpstreamServer handles incoming chunks from clients
@@ -80,7 +80,7 @@ func (s *UpstreamServer) handleChunk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Received chunk %d/%d for session %s", 
+	log.Printf("Received chunk %d/%d for session %s",
 		chunk.SequenceNum, chunk.TotalChunks, chunk.SessionID)
 
 	// Apply obfuscation
@@ -164,7 +164,7 @@ func (s *UpstreamServer) Start() error {
 	addr := fmt.Sprintf(":%d", s.config.ListenPort)
 	log.Printf("Upstream server starting on %s", addr)
 	log.Printf("Forwarding to central proxy: %s", s.config.CentralProxy)
-	
+
 	return http.ListenAndServe(addr, nil)
 }
 

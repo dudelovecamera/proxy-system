@@ -11,17 +11,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yourusername/proxy-system/common"
+	"github.com/dudelovecamera/proxy-system/common"
 	"gopkg.in/yaml.v3"
 )
 
 // DownstreamConfig configuration for downstream server
 type DownstreamConfig struct {
-	ListenPort         int                      `yaml:"listen_port"`
-	Obfuscation        common.ObfuscationConfig `yaml:"obfuscation"`
-	Encryption         common.EncryptionConfig  `yaml:"encryption"`
-	EncryptionKey      []byte                   `yaml:"-"`
-	ReassemblyTimeout  int                      `yaml:"reassembly_timeout"` // milliseconds
+	ListenPort        int                      `yaml:"listen_port"`
+	Obfuscation       common.ObfuscationConfig `yaml:"obfuscation"`
+	Encryption        common.EncryptionConfig  `yaml:"encryption"`
+	EncryptionKey     []byte                   `yaml:"-"`
+	ReassemblyTimeout int                      `yaml:"reassembly_timeout"` // milliseconds
 }
 
 // DownstreamServer handles response chunks and delivers to clients
@@ -97,7 +97,7 @@ func (s *DownstreamServer) handleChunk(w http.ResponseWriter, r *http.Request) {
 		chunk.Data = decrypted
 	}
 
-	log.Printf("Downstream received chunk %d/%d for session %s", 
+	log.Printf("Downstream received chunk %d/%d for session %s",
 		chunk.SequenceNum, chunk.TotalChunks, chunk.SessionID)
 
 	// Add to session
@@ -258,7 +258,7 @@ func (s *DownstreamServer) Start() error {
 
 	addr := fmt.Sprintf(":%d", s.config.ListenPort)
 	log.Printf("Downstream server starting on %s", addr)
-	
+
 	return http.ListenAndServe(addr, nil)
 }
 
